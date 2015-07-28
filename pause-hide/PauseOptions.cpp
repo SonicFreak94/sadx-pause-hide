@@ -4,12 +4,13 @@
 FunctionPointer(int, GetCameraThing, (void), 0x004348E0);
 FunctionPointer(bool, LevelHasMap, (void), 0x00458720);
 
-uint8_t hax = PauseOptions_Unknown;
-
 char __cdecl SetPauseDisplayOptions(uint8_t* a1)
 {
 	if ((ControllersRaw[0].HeldButtons & (Buttons_X | Buttons_Y)) == (Buttons_X | Buttons_Y))
+	{
+		*a1 = 0;
 		return 0;
+	}
 
 	uint8_t options = PauseOptions_Quit | PauseOptions_Controls | PauseOptions_Continue;
 	uint8_t count = 3;
