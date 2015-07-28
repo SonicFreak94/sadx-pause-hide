@@ -8,19 +8,11 @@ uint8_t hax = PauseOptions_Unknown;
 
 char __cdecl SetPauseDisplayOptions(uint8_t* a1)
 {
-	uint8_t options;
-	uint8_t count;
-
-	if (ControllersRaw[0].HeldButtons & (Buttons_X | Buttons_Y))
-	{
-		options = 0;
+	if ((ControllersRaw[0].HeldButtons & (Buttons_X | Buttons_Y)) == (Buttons_X | Buttons_Y))
 		return 0;
-	}
-	else
-	{
-		options = PauseOptions_Quit | PauseOptions_Controls | PauseOptions_Continue;
-		count = 3;
-	}
+
+	uint8_t options = PauseOptions_Quit | PauseOptions_Controls | PauseOptions_Continue;
+	uint8_t count = 3;
 	
 	// If not Chao Garden
 	if (GetCameraThing() && CurrentLevel < (signed int)LevelIDs_SSGarden)
