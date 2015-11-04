@@ -6,7 +6,7 @@ FunctionPointer(bool, LevelHasMap, (void), 0x00458720);
 
 char __cdecl SetPauseDisplayOptions(uint8_t* a1)
 {
-	if ((ControllersRaw[0].HeldButtons & (Buttons_X | Buttons_Y)) == (Buttons_X | Buttons_Y))
+	if ((ControllerPointers[0]->HeldButtons & (Buttons_X | Buttons_Y)) == (Buttons_X | Buttons_Y))
 	{
 		*a1 = 0;
 		return 0;
