@@ -82,11 +82,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="PauseOptions.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="pause-hide.cpp" />
-    <ClCompile Include="PauseOptions.cpp" />
+    <ClCompile Include="mod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="mod.ini" />

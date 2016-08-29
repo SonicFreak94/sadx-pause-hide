@@ -1,10 +1,6 @@
 #include <SADXModLoader.h>
-#include "PauseOptions.h"
 
-FunctionPointer(int, GetCameraThing, (void), 0x004348E0);
-FunctionPointer(bool, LevelHasMap, (void), 0x00458720);
-
-char __cdecl SetPauseDisplayOptions(uint8_t* a1)
+static char __cdecl SetPauseDisplayOptions_(uint8_t* a1)
 {
 	if ((ControllerPointers[0]->HeldButtons & (Buttons_X | Buttons_Y)) == (Buttons_X | Buttons_Y))
 	{
@@ -14,14 +10,14 @@ char __cdecl SetPauseDisplayOptions(uint8_t* a1)
 
 	uint8_t options = PauseOptions_Quit | PauseOptions_Controls | PauseOptions_Continue;
 	uint8_t count = 3;
-	
+
 	// If not Chao Garden
-	if (GetCameraThing() && CurrentLevel < (signed int)LevelIDs_SSGarden)
+	if (IsCameraControlEnabled() && CurrentLevel < (signed int)LevelIDs_SSGarden)
 	{
 		options = PauseOptions_Camera | PauseOptions_Quit | PauseOptions_Controls | PauseOptions_Continue;
 		count = 4;
 	}
-	
+
 	// If in Action Stage
 	if ((CurrentLevel < (signed int)LevelIDs_StationSquare || CurrentLevel >(signed int)LevelIDs_Past)
 		&& (CurrentLevel < (signed int)LevelIDs_SSGarden || CurrentLevel >(signed int)LevelIDs_MRGarden)
@@ -47,4 +43,15 @@ char __cdecl SetPauseDisplayOptions(uint8_t* a1)
 
 	*a1 = options;
 	return count;
+}
+
+extern "C"
+{
+	__declspec(dllexport) ModInfo SADXModInfo = { ModLoaderVer };
+
+	PointerInfo jumps[] = {
+		{ (void*)SetPauseDisplayOptions, SetPauseDisplayOptions_ }
+	};
+
+	__declspec(dllexport) PointerList Jumps[] = { { arrayptrandlength(jumps) } };
 }
